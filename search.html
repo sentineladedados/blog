@@ -1,0 +1,346 @@
+<!-- search.html - Página de busca global do site -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar - Sentinela de Dados</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
+    }
+    .search-result {
+      transition: all 0.3s ease;
+    }
+    .search-result:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    .highlight {
+      background-color: #fef3c7;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+    .search-suggestion {
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .search-suggestion:hover {
+      background-color: #f3f4f6;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e3a8a',
+            secondary: '#065f46',
+            accent: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Navigation -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-4 md:mb-0">
+          <div class="logo">
+            <h1 class="text-3xl font-bold">
+              <a href="index.html" class="hover:text-accent transition-colors">Sentinela de Dados</a>
+            </h1>
+          </div>
+          <p class="ml-4 text-yellow-300 italic hidden md:block">Decifrando no código, um futuro mais humano!</p>
+        </div>
+        <nav class="flex items-center space-x-1 md:space-x-6">
+          <a href="index.html" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Início</a>
+          <a href="index.html#artigos" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Artigos</a>
+          <a href="index.html#sobre" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Sobre</a>
+          <a href="index.html#contato" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Contato</a>
+          <div id="auth-container"></div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Hero Section -->
+  <section class="bg-white py-12 border-b border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <i class="fas fa-search text-6xl text-primary mb-6"></i>
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Buscar Artigos</h1>
+        <p class="text-xl text-gray-600 mb-8">Encontre conteúdos sobre IA, Big Data, Cibersegurança e muito mais</p>
+        
+        <!-- Main Search Bar -->
+        <div class="relative max-w-2xl mx-auto">
+          <input 
+            type="text" 
+            id="main-search-input" 
+            placeholder="Digite sua busca aqui..."
+            class="w-full pl-12 pr-16 py-4 text-lg border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary"
+            autocomplete="off"
+          >
+          <i class="fas fa-search absolute left-4 top-5 text-gray-400 text-xl"></i>
+          <button onclick="performSearch()" class="absolute right-2 top-2 bg-primary hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-medium">
+            Buscar
+          </button>
+          
+          <!-- Search Suggestions Dropdown -->
+          <div id="search-suggestions" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden z-10">
+            <!-- Sugestões serão inseridas aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Filters -->
+  <section class="bg-gray-50 py-6 border-b border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center space-y-4 lg:space-y-0">
+          <!-- Category Filters -->
+          <div class="flex flex-wrap gap-2">
+            <span class="text-gray-600 font-medium mr-2">Categorias:</span>
+            <button onclick="filterByCategory('all')" class="category-filter active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Todas
+            </button>
+            <button onclick="filterByCategory('ia')" class="category-filter px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              IA
+            </button>
+            <button onclick="filterByCategory('bigdata')" class="category-filter px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Big Data
+            </button>
+            <button onclick="filterByCategory('ciberseguranca')" class="category-filter px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Cibersegurança
+            </button>
+            <button onclick="filterByCategory('legislacao')" class="category-filter px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Legislação
+            </button>
+            <button onclick="filterByCategory('humor')" class="category-filter px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+              Humor
+            </button>
+          </div>
+
+          <!-- Sort and Date Filters -->
+          <div class="flex items-center space-x-4">
+            <select id="date-filter" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+              <option value="all">Qualquer data</option>
+              <option value="week">Última semana</option>
+              <option value="month">Último mês</option>
+              <option value="year">Último ano</option>
+            </select>
+            
+            <select id="sort-filter" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+              <option value="relevance">Relevância</option>
+              <option value="newest">Mais recentes</option>
+              <option value="oldest">Mais antigos</option>
+              <option value="popular">Mais populares</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Results -->
+  <main class="py-12">
+    <div class="container mx-auto px-4">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Search Status -->
+        <div id="search-status" class="mb-8">
+          <!-- Status da busca será exibido aqui -->
+        </div>
+
+        <!-- Popular Searches (shown when no search is performed) -->
+        <div id="popular-searches" class="mb-12">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Buscas populares</h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <button onclick="searchFor('inteligência artificial')" class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow text-left">
+              <i class="fas fa-brain text-blue-600 text-2xl mb-2"></i>
+              <h3 class="font-semibold text-gray-800">Inteligência Artificial</h3>
+              <p class="text-sm text-gray-600">125 artigos</p>
+            </button>
+            
+            <button onclick="searchFor('LGPD')" class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow text-left">
+              <i class="fas fa-shield-alt text-green-600 text-2xl mb-2"></i>
+              <h3 class="font-semibold text-gray-800">LGPD</h3>
+              <p class="text-sm text-gray-600">89 artigos</p>
+            </button>
+            
+            <button onclick="searchFor('machine learning')" class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow text-left">
+              <i class="fas fa-robot text-purple-600 text-2xl mb-2"></i>
+              <h3 class="font-semibold text-gray-800">Machine Learning</h3>
+              <p class="text-sm text-gray-600">67 artigos</p>
+            </button>
+            
+            <button onclick="searchFor('cibersegurança')" class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow text-left">
+              <i class="fas fa-lock text-red-600 text-2xl mb-2"></i>
+              <h3 class="font-semibold text-gray-800">Cibersegurança</h3>
+              <p class="text-sm text-gray-600">54 artigos</p>
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Searches -->
+        <div id="recent-searches" class="mb-12 hidden">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Buscas recentes</h3>
+          <div id="recent-searches-list" class="flex flex-wrap gap-2">
+            <!-- Buscas recentes serão inseridas aqui -->
+          </div>
+        </div>
+
+        <!-- Search Results Container -->
+        <div id="search-results-container" class="hidden">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">
+              Resultados da busca
+            </h2>
+            <div class="flex items-center space-x-2">
+              <button onclick="toggleResultsView('list')" id="list-view-btn" class="p-2 rounded-lg bg-primary text-white">
+                <i class="fas fa-list"></i>
+              </button>
+              <button onclick="toggleResultsView('grid')" id="grid-view-btn" class="p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+                <i class="fas fa-th-large"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Count and Info -->
+          <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <p class="text-blue-800">
+              <i class="fas fa-info-circle mr-2"></i>
+              <span id="results-info">Encontrados 0 resultados</span>
+              <span id="search-time" class="ml-4 text-sm opacity-75"></span>
+            </p>
+          </div>
+
+          <!-- Results List -->
+          <div id="results-list" class="space-y-6">
+            <!-- Resultados da busca serão inseridos aqui -->
+          </div>
+
+          <!-- Results Grid -->
+          <div id="results-grid" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Resultados em formato de grid serão inseridos aqui -->
+          </div>
+
+          <!-- Load More Results -->
+          <div id="load-more-container" class="text-center mt-12 hidden">
+            <button onclick="loadMoreResults()" class="bg-primary hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-lg">
+              Carregar mais resultados
+            </button>
+          </div>
+        </div>
+
+        <!-- No Results -->
+        <div id="no-results" class="hidden text-center py-16">
+          <i class="fas fa-search-minus text-6xl text-gray-300 mb-6"></i>
+          <h3 class="text-2xl font-bold text-gray-600 mb-4">Nenhum resultado encontrado</h3>
+          <p class="text-gray-500 mb-6">Tente usar termos diferentes ou verifique a ortografia.</p>
+          
+          <div class="max-w-md mx-auto">
+            <h4 class="font-semibold text-gray-700 mb-3">Sugestões:</h4>
+            <ul class="text-left text-gray-600 space-y-2">
+              <li><i class="fas fa-check text-green-500 mr-2"></i>Use palavras-chave mais gerais</li>
+              <li><i class="fas fa-check text-green-500 mr-2"></i>Verifique a ortografia</li>
+              <li><i class="fas fa-check text-green-500 mr-2"></i>Tente sinônimos</li>
+              <li><i class="fas fa-check text-green-500 mr-2"></i>Remova filtros desnecessários</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-results" class="hidden text-center py-16">
+          <i class="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
+          <p class="text-gray-600">Buscando artigos...</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Newsletter Section -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <i class="fas fa-envelope-open-text text-5xl mb-6"></i>
+        <h2 class="text-3xl font-bold mb-4">Não encontrou o que procurava?</h2>
+        <p class="text-xl mb-8">Assine nossa newsletter e seja o primeiro a saber sobre novos artigos e conteúdos exclusivos.</p>
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+          <input type="email" id="newsletter-email" placeholder="Seu melhor e-mail" class="flex-grow px-4 py-3 rounded-lg focus:outline-none text-gray-800" required>
+          <button type="submit" class="bg-accent hover:bg-yellow-600 text-white font-bold px-6 py-3 rounded-lg">
+            Assinar <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </form>
+        <p class="mt-4 text-sm opacity-80">Respeitamos sua privacidade. Nunca compartilharemos seu e-mail.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold mb-4">Sentinela de Dados</h3>
+          <p class="text-gray-300 mb-4">Decifrando no código, um futuro mais humano!</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Links Rápidos</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-300 hover:text-white">Início</a></li>
+            <li><a href="index.html#artigos" class="text-gray-300 hover:text-white">Artigos</a></li>
+            <li><a href="index.html#sobre" class="text-gray-300 hover:text-white">Sobre</a></li>
+            <li><a href="index.html#contato" class="text-gray-300 hover:text-white">Contato</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categorias</h4>
+          <ul class="space-y-2">
+            <li><a href="category.html?cat=ia" class="text-gray-300 hover:text-white">Inteligência Artificial</a></li>
+            <li><a href="category.html?cat=bigdata" class="text-gray-300 hover:text-white">Big Data</a></li>
+            <li><a href="category.html?cat=ciberseguranca" class="text-gray-300 hover:text-white">Cibersegurança</a></li>
+            <li><a href="category.html?cat=legislacao" class="text-gray-300 hover:text-white">Legislação</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p class="text-gray-300">&copy; 2024 Sentinela de Dados. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+  
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/search-manager.js"></script>
+  <script src="js/forms.js"></script>
+  
+  <div id="firebase-error" style="display: none;"></div>
+</body>
+</html>
+

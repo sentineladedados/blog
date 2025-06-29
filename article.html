@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="article-title">Artigo - Sentinela de Dados</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
+    }
+    .prose {
+      max-width: 65ch;
+    }
+    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+      color: #1f2937;
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    .prose p {
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+    .prose ul, .prose ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+    .prose li {
+      margin-bottom: 0.5rem;
+    }
+    .prose blockquote {
+      border-left: 4px solid #3b82f6;
+      padding-left: 1rem;
+      margin: 2rem 0;
+      font-style: italic;
+      color: #4b5563;
+    }
+    .prose code {
+      background-color: #f3f4f6;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+    .prose pre {
+      background-color: #1f2937;
+      color: #f9fafb;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+    .prose img {
+      border-radius: 0.5rem;
+      margin: 2rem 0;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e3a8a',
+            secondary: '#065f46',
+            accent: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-4">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center">
+          <a href="index.html" class="text-2xl font-bold hover:text-accent transition-colors">
+            Sentinela de Dados
+          </a>
+        </div>
+        <nav class="flex items-center space-x-6">
+          <a href="index.html" class="hover:text-accent transition-colors">Início</a>
+          <a href="index.html#artigos" class="hover:text-accent transition-colors">Artigos</a>
+          <a href="search.html" class="hover:text-accent transition-colors">Buscar</a>
+          <div id="auth-container"></div>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="bg-white border-b border-gray-200 py-3">
+    <div class="container mx-auto px-4">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="index.html" class="hover:text-primary">Início</a></li>
+        <li><i class="fas fa-chevron-right text-gray-400"></i></li>
+        <li><span id="breadcrumb-category">Artigos</span></li>
+        <li><i class="fas fa-chevron-right text-gray-400"></i></li>
+        <li class="text-gray-800 font-medium">Artigo</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Article Content -->
+  <main class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Article Header -->
+      <header class="mb-8">
+        <div class="flex items-center mb-4">
+          <span id="article-category" class="bg-blue-100 text-blue-600 text-sm font-semibold px-3 py-1 rounded-full">
+            Categoria
+          </span>
+          <span class="text-gray-500 text-sm ml-4" id="article-date">Data</span>
+          <span class="text-gray-500 text-sm ml-4">
+            <i class="fas fa-eye mr-1"></i>
+            <span id="article-views">0</span> visualizações
+          </span>
+        </div>
+        
+        <h1 id="article-title" class="text-4xl font-bold text-gray-800 mb-6 leading-tight">
+          Carregando artigo...
+        </h1>
+      </header>
+
+      <!-- Article Body -->
+      <article class="prose prose-lg max-w-none mb-12" id="article-content">
+        <div class="text-center py-12">
+          <i class="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
+          <p class="text-gray-600">Carregando conteúdo...</p>
+        </div>
+      </article>
+
+      <!-- Article Actions -->
+      <div class="bg-white rounded-lg p-6 shadow-md mb-8">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-6">
+            <button id="like-button" class="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
+              <i id="like-icon" class="far fa-heart text-xl"></i>
+              <span id="like-count">0</span>
+            </button>
+            
+            <div class="flex items-center space-x-2 text-gray-600">
+              <i class="fas fa-comment text-xl"></i>
+              <span id="comments-count">0</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center space-x-4">
+            <button class="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors">
+              <i class="fas fa-share-alt"></i>
+              <span>Compartilhar</span>
+            </button>
+            
+            <button class="flex items-center space-x-2 text-gray-600 hover:text-yellow-500 transition-colors">
+              <i class="far fa-bookmark"></i>
+              <span>Salvar</span>
+            </button>
+          </div>
+        </div>
+        
+        <div class="mt-4 pt-4 border-t border-gray-200">
+          <p id="like-count-text" class="text-sm text-gray-600">0 pessoas curtiram este artigo</p>
+        </div>
+      </div>
+
+      <!-- Comments Section -->
+      <section class="bg-white rounded-lg p-6 shadow-md">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6">
+          Comentários (<span id="comments-count">0</span>)
+        </h3>
+        
+        <!-- Comment Form -->
+        <div class="mb-8 p-4 bg-gray-50 rounded-lg">
+          <h4 class="font-semibold text-gray-800 mb-3">Deixe seu comentário</h4>
+          <textarea id="comment-input" 
+                    placeholder="Compartilhe sua opinião sobre este artigo..." 
+                    class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary resize-none"
+                    rows="4"></textarea>
+          <div class="flex justify-end mt-3">
+            <button id="submit-comment" 
+                    class="bg-primary hover:bg-blue-800 text-white font-medium px-6 py-2 rounded-lg transition-colors">
+              Comentar
+            </button>
+          </div>
+        </div>
+        
+        <!-- Comments List -->
+        <div id="comments-container">
+          <p class="text-center py-4 text-gray-500">Carregando comentários...</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8 mt-16">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Sentinela de Dados</h3>
+          <p class="mb-4 text-gray-400">Decifrando no código, um futuro mais humano!</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categorias</h4>
+          <ul class="space-y-2">
+            <li><a href="category.html?cat=ia" class="text-gray-400 hover:text-white">Inteligência Artificial</a></li>
+            <li><a href="category.html?cat=bigdata" class="text-gray-400 hover:text-white">Big Data</a></li>
+            <li><a href="category.html?cat=ciberseguranca" class="text-gray-400 hover:text-white">Cibersegurança</a></li>
+            <li><a href="category.html?cat=legislacao" class="text-gray-400 hover:text-white">Legislação</a></li>
+            <li><a href="category.html?cat=humor" class="text-gray-400 hover:text-white">Humor</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Links Úteis</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Artigos Populares</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Tutoriais</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Glossário</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Cookies</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">LGPD</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-center items-center">
+          <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sentinela de Dados. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-primary rounded-full text-white shadow-lg hidden">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+  
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/article.js"></script>
+  <script src="js/forms.js"></script>
+  
+  <div id="firebase-error" style="display: none;"></div>
+</body>
+</html>
+

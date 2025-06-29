@@ -1,0 +1,495 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinela de Dados - Decifrando no código, um futuro mais humano</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
+    }
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .nav-link:hover {
+      color: #f59e0b;
+    }
+    .logo {
+      position: relative;
+    }
+    .logo::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b);
+      border-radius: 3px;
+    }
+    .prose {
+      max-width: 65ch;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e3a8a',
+            secondary: '#065f46',
+            accent: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-4 md:mb-0">
+          <div class="logo">
+            <h1 class="text-3xl font-bold">Sentinela de Dados</h1>
+          </div>
+          <p class="ml-4 text-yellow-300 italic hidden md:block">Decifrando no código, um futuro mais humano!</p>
+        </div>
+        <nav class="flex items-center space-x-1 md:space-x-6">
+          <a href="#" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Início</a>
+          <a href="#artigos" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Artigos</a>
+          <a href="#sobre" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Sobre</a>
+          <a href="#contato" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Contato</a>
+          <div id="auth-container"></div>
+          <button class="bg-accent hover:bg-yellow-600 text-white font-bold px-4 py-2 rounded-md ml-2">
+            <i class="fas fa-search mr-2"></i>Buscar
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg text-white py-16">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-8 md:mb-0">
+          <h2 class="text-4xl md:text-5xl font-bold mb-6">Desvendando a tecnologia para um futuro mais humano</h2>
+          <p class="text-xl mb-8">Análises profundas e explicações claras sobre Inteligência Artificial, Big Data e Cibersegurança para profissionais, estudantes e cidadãos curiosos.</p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <button class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg text-lg">
+              <i class="fas fa-book-reader mr-2"></i>Comece a ler
+            </button>
+            <button class="bg-white hover:bg-gray-100 text-primary font-bold py-3 px-6 rounded-lg text-lg">
+              <i class="fas fa-envelope mr-2"></i>Assine nossa newsletter
+            </button>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+          <div class="relative w-64 h-64 md:w-80 md:h-80">
+            <div class="absolute inset-0 bg-blue-500 rounded-full opacity-20 animate-pulse"></div>
+            <div class="absolute inset-4 bg-green-500 rounded-full opacity-20 animate-pulse delay-100"></div>
+            <div class="absolute inset-8 bg-yellow-500 rounded-full opacity-20 animate-pulse delay-200"></div>
+            <div class="relative z-10 flex items-center justify-center w-full h-full">
+              <div class="text-center">
+             <i class="fas fa-shield-all text-6xl md:text-8xl text-white mb-4"><img src="img/Logo_NoName_NoBg.png"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="bg-white py-12">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Explore nossas categorias</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <!-- Category 1 -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-brain text-blue-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Inteligência Artificial</h3>
+          <p class="text-gray-600">Entenda como a IA está transformando nossa sociedade e os debates éticos envolvidos.</p>
+          <a href="category.html?cat=ia" class="mt-4 inline-block text-blue-600 hover:text-blue-800 font-medium">
+            Ver artigos <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+        
+        <!-- Category 2 -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-database text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Big Data</h3>
+          <p class="text-gray-600">Descubra como os dados estão moldando decisões e o que isso significa para sua privacidade.</p>
+          <a href="category.html?cat=bigdata" class="mt-4 inline-block text-green-600 hover:text-green-800 font-medium">
+            Ver artigos <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+        
+        <!-- Category 3 -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-lock text-red-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Cibersegurança</h3>
+          <p class="text-gray-600">Proteja-se online e entenda as ameaças digitais que enfrentamos diariamente.</p>
+          <a href="category.html?cat=ciberseguranca" class="mt-4 inline-block text-red-600 hover:text-red-800 font-medium">
+            Ver artigos <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+        
+        <!-- Category 4 -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-balance-scale text-purple-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Legislação</h3>
+          <p class="text-gray-600">Análises sobre leis como LGPD e PL 2338/2023 e seu impacto na tecnologia.</p>
+          <a href="category.html?cat=legislacao" class="mt-4 inline-block text-purple-600 hover:text-purple-800 font-medium">
+            Ver artigos <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+
+        <!-- Category 5 -->
+        <div class="bg-gray-50 rounded-lg p-6 shadow-md hover:shadow-xl transition-shadow duration-300">
+          <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-face-laugh-squint text-yellow-600 text-2xl"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Humor</h3>
+          <p class="text-gray-600">Um pouco de diversão com as situações mais inusitadas da tecnologia.</p>
+          <a href="category.html?cat=humor" class="mt-4 inline-block text-yellow-600 hover:text-yellow-800 font-medium">
+            Ver artigos <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>                
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Articles -->
+  <section id="artigos" class="py-16 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-800">Artigos em Destaque</h2>
+        <a href="#" class="text-primary hover:text-blue-800 font-medium">Ver todos <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="featured-articles-container">
+        <!-- Artigos serão carregados aqui dinamicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <i class="fas fa-envelope-open-text text-5xl mb-6"></i>
+        <h2 class="text-3xl font-bold mb-4">Assine nossa newsletter</h2>
+        <p class="text-xl mb-8">Receba análises exclusivas, atualizações sobre tecnologia e convites para eventos diretamente no seu e-mail.</p>
+        <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto" id="newsletter-form">
+          <input type="email" placeholder="Seu melhor e-mail" class="flex-grow px-4 py-3 rounded-lg focus:outline-none text-gray-800" required>
+          <button type="submit" class="bg-accent hover:bg-yellow-600 text-white font-bold px-6 py-3 rounded-lg">
+            Assinar <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </form>
+        <p class="mt-4 text-sm opacity-80">Respeitamos sua privacidade. Nunca compartilharemos seu e-mail.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="sobre" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col lg:flex-row items-center">
+        <div class="lg:w-1/2 mb-8 lg:mb-0 lg:pr-12">
+          <h2 class="text-3xl font-bold mb-6 text-gray-800">Sobre o Sentinela de Dados</h2>
+          <p class="text-lg text-gray-600 mb-4">Nosso objetivo é desmistificar os temas complexos de tecnologia, tornando-os acessíveis para todos, desde profissionais até cidadãos curiosos.</p>
+          <p class="text-lg text-gray-600 mb-6">Acreditamos que o entendimento crítico sobre IA, Big Data e Cibersegurança é fundamental para construirmos um futuro tecnológico mais humano e justo.</p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="flex items-center mb-4 sm:mb-0">
+              <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-lightbulb text-blue-600"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800">Desmistificar</h4>
+                <p class="text-gray-600 text-sm">Tornar o complexo em simples</p>
+              </div>
+            </div>
+            <div class="flex items-center">
+              <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                <i class="fas fa-shield-alt text-green-600"></i>
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-800">Proteger</h4>
+                <p class="text-gray-600 text-sm">Informação é poder</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="lg:w-1/2">
+          <div class="bg-gray-100 rounded-xl p-8">
+            <h3 class="text-2xl font-bold mb-6 text-gray-800">Nossos Princípios</h3>
+            <div class="space-y-6">
+              <div class="flex">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Informação Acessível</h4>
+                  <p class="text-gray-600">Explicamos conceitos técnicos de forma clara, sem perder a profundidade.</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Equilíbrio e Imparcialidade</h4>
+                  <p class="text-gray-600">Apresentamos múltiplas perspectivas sobre cada tema controverso.</p>
+                </div>
+              </div>
+              
+              <div class="flex">
+                <div class="flex-shrink-0 mt-1">
+                  <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white">
+                    <i class="fas fa-check"></i>
+                  </div>
+                </div>
+                <div class="ml-4">
+                  <h4 class="text-lg font-semibold text-gray-800">Foco no Humano</h4>
+                  <p class="text-gray-600">Sempre conectamos a tecnologia aos seus impactos na sociedade e direitos fundamentais.</p>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contato" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Entre em Contato</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <h3 class="text-xl font-semibold mb-6 text-gray-800">Envie sua mensagem</h3>
+            
+            <form class="space-y-6" id="contact-form">
+              <div>
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Seu nome</label>
+                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required>
+              </div>
+              
+              <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Seu e-mail</label>
+                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required>
+              </div>
+              
+              <div>
+                <label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Assunto</label>
+                <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                  <option>Dúvida sobre conteúdo</option>
+                  <option>Sugestão de pauta</option>
+                  <option>Parceria</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensagem</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" required></textarea>
+              </div>
+              
+              <button type="submit" class="bg-primary hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg">
+                Enviar mensagem <i class="fas fa-paper-plane ml-2"></i>
+              </button>
+            </form>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-6 text-gray-800">Outras formas de contato</h3>
+            
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="fas fa-envelope text-blue-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-gray-800">E-mail</h4>
+                  <p class="text-gray-600">contato@sentineladedados.com</p>
+                  <p class="text-sm text-gray-500">Respondemos em até 24 horas</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="fab fa-whatsapp text-green-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-gray-800">WhatsApp</h4>
+                  <p class="text-gray-600">(11) 99999-9999</p>
+                  <p class="text-sm text-gray-500">Seg-Sex, 9h às 18h</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-4 mt-1">
+                  <i class="fab fa-linkedin text-purple-600"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-gray-800">LinkedIn</h4>
+                  <p class="text-gray-600">@sentineladedados</p>
+                  <p class="text-sm text-gray-500">Conecte-se conosco</p>
+                </div>
+              </div>
+            </div>
+            
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <h3 class="text-xl font-bold mb-4">Sentinela de Dados</h3>
+          <p class="mb-4 text-gray-400">Decifrando no código, um futuro mais humano!</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </div>
+        </div>
+                
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categorias</h4>
+          <ul class="space-y-2">
+            <li><a href="category.html?cat=ia" class="text-gray-400 hover:text-white">Inteligência Artificial</a></li>
+            <li><a href="category.html?cat=bigdata" class="text-gray-400 hover:text-white">Big Data</a></li>
+            <li><a href="category.html?cat=ciberseguranca" class="text-gray-400 hover:text-white">Cibersegurança</a></li>
+            <li><a href="category.html?cat=legislacao" class="text-gray-400 hover:text-white">Legislação</a></li>
+            <li><a href="category.html?cat=humor" class="text-gray-400 hover:text-white">Humor</a></li>
+          </ul>
+        </div>
+                
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Links Úteis</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Artigos Populares</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Tutoriais</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Glossário</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+          </ul>
+        </div>
+                
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Termos de Uso</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Política de Privacidade</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Cookies</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">LGPD</a></li>
+          </ul>
+        </div>
+      </div>
+            
+      <div class="border-t border-gray-800 pt-8">
+        <div class="flex flex-col md:flex-row justify-center items-center">
+          <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sentinela de Dados. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-primary rounded-full text-white shadow-lg hidden">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+  
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js" type="module"></script>
+  <script src="js/articles.js" type="module"></script>
+  <script src="js/forms.js"></script>
+  
+  <div id="firebase-error" style="display: none;"></div>
+
+  <script>
+    // Back to Top Button
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTopButton = document.getElementById('backToTop');
+      
+      if (backToTopButton) {
+        window.addEventListener('scroll', () => {
+          if (window.pageYOffset > 300) {
+            backToTopButton.classList.remove('hidden');
+          } else {
+            backToTopButton.classList.add('hidden');
+          }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          if (targetId === '#') return;
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

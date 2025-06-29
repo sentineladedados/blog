@@ -1,0 +1,338 @@
+<!-- category.html - Página de categoria que agrupa artigos por categoria -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="category-title">Categoria - Sentinela de Dados</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e3a8a 0%, #065f46 100%);
+    }
+    .article-card {
+      transition: all 0.3s ease;
+    }
+    .article-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .filter-button.active {
+      background-color: #1e3a8a;
+      color: white;
+    }
+    .category-hero {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .category-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(30, 58, 138, 0.8), rgba(6, 95, 70, 0.8));
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1e3a8a',
+            secondary: '#065f46',
+            accent: '#f59e0b',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50">
+  <!-- Header Navigation -->
+  <header class="gradient-bg text-white shadow-lg">
+    <div class="container mx-auto px-4 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-4 md:mb-0">
+          <div class="logo">
+            <h1 class="text-3xl font-bold">
+              <a href="index.html" class="hover:text-accent transition-colors">Sentinela de Dados</a>
+            </h1>
+          </div>
+          <p class="ml-4 text-yellow-300 italic hidden md:block">Decifrando no código, um futuro mais humano!</p>
+        </div>
+        <nav class="flex items-center space-x-1 md:space-x-6">
+          <a href="index.html" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Início</a>
+          <a href="index.html#artigos" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Artigos</a>
+          <a href="index.html#sobre" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Sobre</a>
+          <a href="index.html#contato" class="nav-link text-white hover:text-accent font-medium px-3 py-2 rounded-md">Contato</a>
+          <div id="auth-container"></div>
+          <button onclick="toggleSearch()" class="bg-accent hover:bg-yellow-600 text-white font-bold px-4 py-2 rounded-md ml-2">
+            <i class="fas fa-search mr-2"></i>Buscar
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category Hero Section -->
+  <section id="category-hero" class="category-hero py-20 text-white">
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="mb-4">
+          <div id="category-icon" class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center text-4xl">
+            <!-- Ícone da categoria será inserido aqui -->
+          </div>
+        </div>
+        <h1 id="category-name" class="text-4xl md:text-5xl font-bold mb-4">Nome da Categoria</h1>
+        <p id="category-description" class="text-xl mb-8 opacity-90">Descrição da categoria</p>
+        <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
+          <div class="flex items-center">
+            <i class="fas fa-newspaper mr-2"></i>
+            <span id="articles-count">0 artigos</span>
+          </div>
+          <div class="flex items-center">
+            <i class="fas fa-clock mr-2"></i>
+            <span>Atualizado regularmente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb Navigation -->
+  <nav class="bg-white border-b border-gray-200 py-3">
+    <div class="container mx-auto px-4">
+      <ol class="flex items-center space-x-2 text-sm text-gray-600">
+        <li><a href="index.html" class="hover:text-primary">Início</a></li>
+        <li><i class="fas fa-chevron-right text-gray-400"></i></li>
+        <li><a href="index.html#artigos" class="hover:text-primary">Artigos</a></li>
+        <li><i class="fas fa-chevron-right text-gray-400"></i></li>
+        <li class="text-gray-800 font-medium" id="breadcrumb-category">Categoria</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Filters and Search -->
+  <section class="bg-white py-6 border-b border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-md">
+          <div class="relative">
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Buscar artigos nesta categoria..."
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+        </div>
+
+        <!-- Sort Options -->
+        <div class="flex items-center space-x-4">
+          <span class="text-gray-600 font-medium">Ordenar por:</span>
+          <select id="sort-select" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+            <option value="newest">Mais recentes</option>
+            <option value="oldest">Mais antigos</option>
+            <option value="popular">Mais populares</option>
+            <option value="title">Título A-Z</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Filter Tags -->
+      <div class="mt-6">
+        <div class="flex flex-wrap gap-2">
+          <button onclick="filterByTag('all')" class="filter-button active px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-colors">
+            Todos
+          </button>
+          <div id="tag-filters">
+            <!-- Tags específicas da categoria serão carregadas aqui -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles Grid -->
+  <main class="py-12">
+    <div class="container mx-auto px-4">
+      <!-- Results Info -->
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-2xl font-bold text-gray-800">
+          <span id="results-count">0</span> artigos encontrados
+        </h2>
+        <div class="flex items-center space-x-2">
+          <button onclick="toggleView('grid')" id="grid-view" class="p-2 rounded-lg bg-primary text-white">
+            <i class="fas fa-th-large"></i>
+          </button>
+          <button onclick="toggleView('list')" id="list-view" class="p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+            <i class="fas fa-list"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div id="loading-state" class="text-center py-12">
+        <i class="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
+        <p class="text-gray-600">Carregando artigos...</p>
+      </div>
+
+      <!-- Articles Container -->
+      <div id="articles-container" class="hidden">
+        <!-- Grid View -->
+        <div id="grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Artigos em formato de grid serão carregados aqui -->
+        </div>
+
+        <!-- List View -->
+        <div id="list-container" class="hidden space-y-6">
+          <!-- Artigos em formato de lista serão carregados aqui -->
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-state" class="hidden text-center py-16">
+        <i class="fas fa-search text-6xl text-gray-300 mb-6"></i>
+        <h3 class="text-2xl font-bold text-gray-600 mb-4">Nenhum artigo encontrado</h3>
+        <p class="text-gray-500 mb-6">Tente ajustar os filtros ou buscar por outros termos.</p>
+        <button onclick="clearFilters()" class="bg-primary hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg">
+          Limpar filtros
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination-container" class="hidden mt-12">
+        <nav class="flex justify-center">
+          <div class="flex items-center space-x-2">
+            <button id="prev-page" onclick="changePage(-1)" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <div id="page-numbers" class="flex space-x-1">
+              <!-- Números das páginas serão inseridos aqui -->
+            </div>
+            <button id="next-page" onclick="changePage(1)" class="px-3 py-2 rounded-lg border border-gray-300 text-gray-600 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </main>
+
+  <!-- Newsletter Section -->
+  <section class="py-16 bg-gradient-to-r from-blue-600 to-green-600 text-white">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <i class="fas fa-envelope-open-text text-5xl mb-6"></i>
+        <h2 class="text-3xl font-bold mb-4">Não perca nenhum artigo</h2>
+        <p class="text-xl mb-8">Assine nossa newsletter e receba os melhores conteúdos sobre <span id="newsletter-category">esta categoria</span> diretamente no seu e-mail.</p>
+        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+          <input type="email" id="newsletter-email" placeholder="Seu melhor e-mail" class="flex-grow px-4 py-3 rounded-lg focus:outline-none text-gray-800" required>
+          <button type="submit" class="bg-accent hover:bg-yellow-600 text-white font-bold px-6 py-3 rounded-lg">
+            Assinar <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </form>
+        <p class="mt-4 text-sm opacity-80">Respeitamos sua privacidade. Nunca compartilharemos seu e-mail.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Categories -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl font-bold text-center mb-8 text-gray-800">Explore outras categorias</h2>
+      <div id="related-categories" class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Categorias relacionadas serão carregadas aqui -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="md:col-span-2">
+          <h3 class="text-2xl font-bold mb-4">Sentinela de Dados</h3>
+          <p class="text-gray-300 mb-4">Decifrando no código, um futuro mais humano!</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="text-gray-300 hover:text-white"><i class="fab fa-github"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Links Rápidos</h4>
+          <ul class="space-y-2">
+            <li><a href="index.html" class="text-gray-300 hover:text-white">Início</a></li>
+            <li><a href="index.html#artigos" class="text-gray-300 hover:text-white">Artigos</a></li>
+            <li><a href="index.html#sobre" class="text-gray-300 hover:text-white">Sobre</a></li>
+            <li><a href="index.html#contato" class="text-gray-300 hover:text-white">Contato</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categorias</h4>
+          <ul class="space-y-2">
+            <li><a href="category.html?cat=ia" class="text-gray-300 hover:text-white">Inteligência Artificial</a></li>
+            <li><a href="category.html?cat=bigdata" class="text-gray-300 hover:text-white">Big Data</a></li>
+            <li><a href="category.html?cat=ciberseguranca" class="text-gray-300 hover:text-white">Cibersegurança</a></li>
+            <li><a href="category.html?cat=legislacao" class="text-gray-300 hover:text-white">Legislação</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+        <p class="text-gray-300">&copy; 2024 Sentinela de Dados. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Search Modal -->
+  <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-start justify-center min-h-screen p-4 pt-20">
+      <div class="bg-white rounded-lg max-w-2xl w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold">Buscar Artigos</h3>
+          <button onclick="toggleSearch()" class="text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="relative mb-4">
+          <input 
+            type="text" 
+            id="global-search-input" 
+            placeholder="Digite sua busca..."
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+          >
+          <i class="fas fa-search absolute left-3 top-4 text-gray-400"></i>
+        </div>
+        <div id="search-results" class="max-h-96 overflow-y-auto">
+          <!-- Resultados da busca serão exibidos aqui -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+  
+  <!-- Scripts -->
+  <script src="js/firebase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/category.js"></script>
+  <script src="js/forms.js"></script>
+  
+  <div id="firebase-error" style="display: none;"></div>
+</body>
+</html>
+
